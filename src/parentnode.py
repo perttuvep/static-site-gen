@@ -15,12 +15,12 @@ class ParentNode(HTMLNode):
         if not self.children:
             raise ValueError("Children required")
         else:
-            out = " "
+            out = ""
             for c in self.children:
                 out += c.to_html()
             if self.props is None:
                 return f"<{self.tag}>{out}</{self.tag}>"
             if self.props is not None:
-                return f"<{self.tag} {self.props_to_html()}>{out}</{self.tag}>"
+                return f"<{self.tag}{self.props_to_html()}>{out}</{self.tag}>"
             else:
                 return out + "This isn't right"

@@ -15,10 +15,9 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
                 raise ValueError("Unclosed delimiter")
 
             for i in range(0, len(text)):
-                if len(text[i]) > 0:
-                    out.append(
-                        TextNode(text[i], text_type)
-                    ) if i % 2 == 1 else out.append(TextNode(text[i], TextType.TEXT))
+                out.append(TextNode(text[i], text_type)) if i % 2 == 1 else out.append(
+                    TextNode(text[i], TextType.TEXT)
+                )
 
     return out
 

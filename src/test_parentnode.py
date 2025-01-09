@@ -31,7 +31,6 @@ class TestParentNode(unittest.TestCase):
             ],
         )
         self.assertEqual(node, node1)
-        print(node3.to_html())
 
     # def test_a(self):
     #     node = HTMLNode("a")

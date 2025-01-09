@@ -21,7 +21,7 @@ class TestTextNode(unittest.TestCase):
         node = TextNode("text", TextType.TEXT)
         self.assertEqual(node, node1)
         node2 = TextNode("boop", TextType.LINKS, "www.google.com")
-        node2 = TextNode.textnode_to_html(node2)
+        node2 = TextNode.textnode_to_htmlnode(node2)
         node3 = LeafNode("a", "boop", {"href": "www.google.com"})
         self.assertEqual(node2, node3)
 
@@ -35,7 +35,6 @@ class TestTextNode(unittest.TestCase):
         nodes = split_nodes_delimiter(nodes, "**", TextType.TEXT)
         nodes = split_nodes_delimiter(nodes, "*", TextType.TEXT)
         nodes = split_nodes_delimiter(nodes, "`", TextType.TEXT)
-        print(nodes)
 
 
 if __name__ == "__main__":

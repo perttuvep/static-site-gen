@@ -9,11 +9,11 @@ class LeafNode(HTMLNode):
         return f"LeafNode({self.tag} {self.value} {self.children} {self.props})"
 
     def to_html(self):
-        if not self.value:
+        if self.value is None:
             raise ValueError("No value in tag!")
-        elif not self.tag:
+        if not self.tag:
             return f"{self.value}"
         if self.props:
-            return f"<{self.tag} {self.props_to_html()}>{self.value}</{self.tag}>"
+            return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
         else:
             return f"<{self.tag}>{self.value}</{self.tag}>"

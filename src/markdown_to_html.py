@@ -16,7 +16,8 @@ def leafnode_from_text(text):
     textnodes = text_to_textnodes(text)
 
     for n in textnodes:
-        leafnodes.append(n.textnode_to_html())
+        leafnodes.append(n.textnode_to_htmlnode())
+    return leafnodes
 
 
 def strip_n_chars(s, n, char):
@@ -41,38 +42,42 @@ def markdown_to_htmlnode(markdown_text_input):
         if blocktype == "paragraph":
             nodes.append(ParentNode("p", leafnode_from_text(block)))
 
-        if blocktype == "heading":
+        elif blocktype == "heading":
             num_hashes = len(block) - len(block.lstrip("#"))
             nodes.append(
-                ParentNode(
-                    f"h{num_hashes}", leafnode_from_text(strip_n_chars(block, 6, "#"))
-                )
+                ParentNode(f"h{num_hashes}", leafnode_from_text(block.lstrip("# ")))
             )
 
-        if blocktype == "ordered_list":
+        elif blocktype == "ordered_list":
             tmpnodes = []
             for line in lines:
                 tmpnodes.append(
-                    ParentNode("li", leafnode_from_text(line.lstrip("123457890. ")))
+                    ParentNode("li", leafnode_from_text(line.lstrip("1234567890. ")))
                 )
             node = ParentNode("ol", tmpnodes)
             nodes.append(node)
 
-        if blocktype == "unordered_list":
+        elif blocktype == "unordered_list":
             tmpnodes = []
             for line in lines:
                 tmpnodes.append(
-                    ParentNode("li", leafnode_from_text(line.lstrip("*- ")))
+                    ParentNode(
+                        "li",
+                        leafnode_from_text(line.replace("* ", "").replace("- ", "")),
+                    )
                 )
             node = ParentNode("ul", tmpnodes)
             nodes.append(node)
 
-        if blocktype == "code":
+        elif blocktype == "code":
             node = ParentNode(
                 "pre", [ParentNode("code", leafnode_from_text(block.strip("`")))]
             )
 
             nodes.append(node)
 
-        if blocktype == "quote":
-            node = LeafNode("blockquote", block.lstrip("> "))
+        elif blocktype == "quote":
+            node = ParentNode("blockquote", leafnode_from_text(block.lstrip("> ")))
+
+            nodes.append(node)
+    return ParentNode("div", nodes)

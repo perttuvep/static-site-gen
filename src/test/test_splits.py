@@ -23,9 +23,7 @@ class TestSplitLinks(unittest.TestCase):
             TextNode("Text with a ![image](image.bmp)", TextType.TEXT),
         ]
 
-        print(split_nodes_links(nodes))
         nodes = split_nodes_images(nodes)
-        print(nodes)
 
     # delimiter = "*"
     # split_nodes_delimiter(nodes, delimiter, TextType.TEXT)

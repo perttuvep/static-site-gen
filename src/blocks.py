@@ -4,25 +4,19 @@ def markdown_to_blocks(text):
 
 def block_to_block_type(inblock):
     blocktype = "paragraph"
-    blocks = "".join(inblock).split("\n")
+    blocks = inblock.split("\n")
     text = "".join(inblock)
     num_hashes = len(text) - len(text.lstrip("#"))
-    order = False
-
-    for i in range(0, len(blocks)):
-        if blocks[i].startswith(f"{i}. "):
-            order = True
-        else:
-            order = False
+    print("--!!!", inblock, "!!!---")
 
     if all((block.startswith("- ") or block.startswith("* ")) for block in blocks):
         blocktype = "unordered_list"
 
+    elif all(block.startswith(f"{i+1}. ") for i, block in enumerate(blocks)):
+        blocktype = "ordered_list"
+
     elif all(block.startswith("> ") for block in blocks):
         blocktype = "quote"
-
-    elif order:
-        blocktype = "ordered"
 
     elif (
         text.startswith("#")
@@ -32,7 +26,7 @@ def block_to_block_type(inblock):
     ):
         blocktype = "heading"
 
-    elif "".join(inblock).startswith("```") and "".join(inblock).endswith("```"):
+    elif text.startswith("```") and text.endswith("```"):
         blocktype = "code"
 
     return blocktype
