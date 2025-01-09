@@ -26,21 +26,16 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(node2, node3)
 
     def test_delim(self):
-        print(
-            split_nodes_delimiter(
-                [
-                    TextNode("text with `code` text", TextType.TEXT),
-                    TextNode("text with **bold text**", TextType.TEXT),
-                    TextNode("text with **bold** **text**", TextType.TEXT),
-                    TextNode(
-                        "text with **bold text** and *italic* text", TextType.TEXT
-                    ),
-                    TextNode("Test with `code` text", TextType.TEXT),
-                ],
-                "*",
+        nodes = [
+            TextNode(
+                "Text with **bold text** and *italic* text and `code` text",
                 TextType.TEXT,
             )
-        )
+        ]
+        nodes = split_nodes_delimiter(nodes, "**", TextType.TEXT)
+        nodes = split_nodes_delimiter(nodes, "*", TextType.TEXT)
+        nodes = split_nodes_delimiter(nodes, "`", TextType.TEXT)
+        print(nodes)
 
 
 if __name__ == "__main__":
